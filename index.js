@@ -4,7 +4,7 @@
 
 const Discord = require("discord.js");
 
-var client = new Discord.client();
+var client = new Discord.Client();
 
     client.on("ready", () =>{
         console.log("O bot está online!!!: " + client.user.tag);
