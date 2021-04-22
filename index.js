@@ -1,35 +1,60 @@
-const express = require('express'),
-    app = express();
+// token: ODM0MDQ4MDIwMDE3ODQwMTg5.YH7Nvw.kntIVYKYn4hsGKQK7840nhMAmgU
+// id: 834048020017840189 
+// link: https://discord.com/oauth2/authorize?client_id=834048020017840189&scope=bot&permissions=511040
 
-app.use(express.static('public'));
+const Discord = require("discord.js");
 
-app.listen(process.env.PORT || 13444, () => console.log('ambiente logado com sucesso!'));
+var client = new Discord.client();
 
-const {Client, MessageAttachment} = require('discord.js'),
-    client = new Client();
-    config = require('./config.json');
-    pokeQuizz = require('./src/js/pokequizz');
+    client.on("ready", () =>{
+        console.log("O bot está online!!!: " + client.user.tag);
+    });
 
-client.on('ready', () =>{
-        console.log(`${client.user.tag} logado com sucesso!`)
-    })
+    client.on("message", message =>{
+        var message_LC = message.content.toLowerCase();
 
-    client.on('message', msg => {
-        if(msg.content == `${config.prefix}pokequizz`){
-            pokeQuizz(msg, MessageAttachment);
+        if(message_LC == "!hello"){
+            message.reply("KOE MALUCO!");
         }
     })
 
-   /*  client.on('message', msg =>{
-        if(msg.content == 'ping'){
-            msg.reply('pong');
-        }
-        if(msg.content ==  `${config.prefix}avatar`){
-        msg.reply(msg.author.displayAvatarURL());
-        }
-        if(msg.content == `${config.prefix}foto`){
-            const attachement = new MessageAttachment(msg.author.displayAvatarURL());
-            msg.channel.send(attachement    );
-        }
-    }) */
-    client.login(config.token);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
