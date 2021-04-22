@@ -16,7 +16,10 @@ var client = new Discord.client();
         if(message_LC == "!hello"){
             message.reply("KOE MALUCO!");
         }
-    })
+    });
+
+    client.login("ODM0MDQ4MDIwMDE3ODQwMTg5.YH7Nvw.kntIVYKYn4hsGKQK7840nhMAmgU");
+
 
 
 
