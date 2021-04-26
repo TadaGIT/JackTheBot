@@ -5,34 +5,76 @@
 const Discord = require("discord.js");
 
 // cria uma nova aplicação
-var client = new Discord.Client();
+const DiscordClient = new Discord.Client();
 
-// faz o require do token do arquivo token.json
-const {
-    token 
+
+
+// adiciona um modo mais seguro de guardar o token (password)
+
+const{
+    token
+    
 } = require("./token.json");
 
-// evento de bot pronto
-    client.on("ready", () =>{
-        console.log("O bot está online!!!: " + client.user.tag);
+// evento de bot ficando online , dispara apenas uma vez
+    DiscordClient.on("ready", () =>{
+        console.log(`Logado como : ${DiscordClient.user.tag}!`);
     });
 
-// evento de mensagem
-    client.on("message", message =>{
-        // o que ele digitar vai para lowercase(minúsculo)
-        var message_LC = message.content.toLowerCase();
+// array de usuários que deram join
+const arrayDeUsuarios = [];
 
-        // se o usuário digitar !hello
-        if(message_LC == "!hello"){
-            // o bot ira responder:
-            message.reply("KOE MALUCO!");
+// função que sorteia os participantes
+const getRandomFromArray = array => array[Math.floor(Math.random() * array.length)];
+
+const fazGrupo = (lista, tamanho) => {
+    const grupo = [];
+
+    while(grupo.length < tamanho && tamanho < lista.length){
+        const sorteado = getRandomFromArray(lista);
+        if(grupo.indexOf(sorteado) < 0) 
+            grupo.push(sorteado);
+    }
+
+    return grupo;
+}
+
+
+// evento de verificação da mensagem que o usuário manda
+    DiscordClient.on("message", message => {
+
+        const inputToLowerCase = message.content.toLowerCase();
+
+        if(inputToLowerCase.includes("!join") && message.author.bot == false){
+
+            arrayDeUsuarios.push(message.author.username);
+            console.log(arrayDeUsuarios);
+            message.reply("entrou na lista de tft!");
+        }
+        else if (inputToLowerCase.includes("!sortear") && message.author.bot == false ){
+
+
+            console.log("grupos "+fazGrupo(arrayDeUsuarios, 1));
+
         }
 
-        //console.log(message); 
+        
+        //comando help
+        else if(inputToLowerCase == "!help"){
+            message.reply("Meus comandos são: !join e !sortear");
+        }
+
+
+
     });
 
+
+   
+
+       
+
     // faz o login da aplicação (o bot)
-    client.login(token);
+    DiscordClient.login(token);
 
 
 
