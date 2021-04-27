@@ -11,70 +11,71 @@ const DiscordClient = new Discord.Client();
 
 // adiciona um modo mais seguro de guardar o token (password)
 
-const{
+const {
     token
-    
+
 } = require("./token.json");
 
 // evento de bot ficando online , dispara apenas uma vez
-    DiscordClient.on("ready", () =>{
-        console.log(`Logado como : ${DiscordClient.user.tag}!`);
-    });
+DiscordClient.on("ready", () => {
+    console.log(`Logado como : ${DiscordClient.user.tag}!`);
+});
 
 // array de usuários que deram join
 const arrayDeUsuarios = [];
 
-// função que sorteia os participantes
-const getRandomFromArray = array => array[Math.floor(Math.random() * array.length)];
-
-const fazGrupo = (lista, tamanho) => {
-    const grupo = [];
-
-    while(grupo.length < tamanho && tamanho < lista.length){
-        const sorteado = getRandomFromArray(lista);
-        if(grupo.indexOf(sorteado) < 0) 
-            grupo.push(sorteado);
-    }
-
-    return grupo;
-}
 
 
 // evento de verificação da mensagem que o usuário manda
-    DiscordClient.on("message", message => {
+DiscordClient.on("message", message => {
 
-        const inputToLowerCase = message.content.toLowerCase();
+    const inputToLowerCase = message.content.toLowerCase();
 
-        if(inputToLowerCase.includes("!join") && message.author.bot == false){
+    if (inputToLowerCase.includes("!join") && message.author.bot == false) {
 
-            arrayDeUsuarios.push(message.author.username);
-            console.log(arrayDeUsuarios);
-            message.reply("entrou na lista de tft!");
+        arrayDeUsuarios.push(message.author.username);
+        console.log(arrayDeUsuarios);
+        message.reply("entrou na lista de tft!" + ` Quantidade de jogadores: ${arrayDeUsuarios.length}!`);
+    }
+    else if (inputToLowerCase.includes("!sortear") && message.author.bot == false) {
+
+        // função que sorteia os participantes
+        const getRandomFromArray = array => array[Math.floor(Math.random() * array.length)];
+
+        const fazGrupo = (lista, tamanho) => {
+            const grupo = [];
+
+            while (grupo.length < tamanho && tamanho < lista.length) {
+                const sorteado = getRandomFromArray(lista);
+                if (grupo.indexOf(sorteado) < 0) grupo.push(sorteado);
+            }
+
+
+            return grupo;
         }
-        else if (inputToLowerCase.includes("!sortear") && message.author.bot == false ){
+
+        console.log(fazGrupo(arrayDeUsuarios, 2));
+        message.reply(fazGrupo(arrayDeUsuarios, 2));
+
+    }
 
 
-            console.log("grupos "+fazGrupo(arrayDeUsuarios, 1));
-
-        }
-
-        
-        //comando help
-        else if(inputToLowerCase == "!help"){
-            message.reply("Meus comandos são: !join e !sortear");
-        }
+    //comando help
+    else if (inputToLowerCase == "!help") {
+        message.reply("Meus comandos são: !join e !sortear");
+    }
 
 
 
-    });
+});
 
 
-   
 
-       
 
-    // faz o login da aplicação (o bot)
-    DiscordClient.login(token);
+
+
+// faz o login da aplicação (o bot)
+DiscordClient.login(token);
 
 
 
